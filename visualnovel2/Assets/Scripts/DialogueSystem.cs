@@ -7,14 +7,11 @@ using UnityEngine.UI;
 public class DialogueSystem : MonoBehaviour
 {
     public static DialogueSystem instance;
-
     public ELEMENTS elements;
     
     private void Awake()
     {
-         instance = this;
-      
-        
+         instance = this;  
     }
     // Start is called before the first frame update
     void Start()
@@ -33,8 +30,7 @@ public class DialogueSystem : MonoBehaviour
         StopSpeaking();
         speechText.text = targetSpeech;
         speaking = StartCoroutine(Speaking(speech, additive, speaker));
-    
-    
+
     }
 
 
@@ -72,10 +68,15 @@ public class DialogueSystem : MonoBehaviour
         targetSpeech = speech;
 
         if (!additive)
-            speechText.text = "";
+        {
+            speechText.text = ""; 
+        }
+           
         else
+        {
             targetSpeech = speechText.text + targetSpeech;
-
+        }
+            
         speakerNameText.text = DetermineSpeaker(speaker); //temporary
 
         isWaitingForUserInput = false;
@@ -92,7 +93,9 @@ public class DialogueSystem : MonoBehaviour
         isWaitingForUserInput = true;
 
         while (isWaitingForUserInput)
+        {
             yield return new WaitForEndOfFrame();
+        }
         StopSpeaking();
 
     }
@@ -111,9 +114,10 @@ public class DialogueSystem : MonoBehaviour
     {
         string retVal = speakerNameText.text; //default return is the current name
         if (s != speakerNameText.text && s != "")
+        {
             retVal = (s.ToLower().Contains("narrator")) ? "" : s;
+        }
         return retVal;
-
     }
 
 

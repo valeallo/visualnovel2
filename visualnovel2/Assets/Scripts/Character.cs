@@ -13,26 +13,39 @@ public class Character
     //the root is the container for all images related to the character in the scene
     [HideInInspector] public RectTransform root;
 
-    public bool isMultiLayerCharacter { get { return renderers.renderer == null; } }
+    public bool IsMultiLayerCharacter { get { return renderers.renderer == null; } }
 
-    public bool enabled { get { return root.gameObject.activeInHierarchy; } set { root.gameObject.SetActive(value); } }
-    public Vector2 anchorPadding {get { return root.anchorMax - root.anchorMin; } }
+    public bool Enabled { get { return root.gameObject.activeInHierarchy; } set { root.gameObject.SetActive(value); } }
+    public Vector2 GetAnchorPadding() { return root.anchorMax - root.anchorMin; } 
    
     //make this character say something
     public void Say(string speech, bool add = false) 
-    {    if (!enabled)
-            enabled = true;
+    {   
+        if (!Enabled) 
+        { 
+            Enabled = true;
+        }
         if (!add)
-            DialogueSystem.instance.Say(speech, true, characterName);
+        { 
+            DialogueSystem.instance.Say(speech, true, characterName); 
+        }
         else
-            DialogueSystem.instance.SayAdd(speech, characterName);
+        { 
+            DialogueSystem.instance.SayAdd(speech, characterName); 
+        }
     
     }
 
 
     Vector2 targetPosition;
     Coroutine moving;
-    bool isMoving { get { return moving != null; } }
+    bool IsMoving { get { return moving != null; } }
+    /// <summary>
+    /// makes the character move
+    /// </summary>
+    /// <param name="Target">2d position where i want to move</param>
+    /// <param name="speed">speed</param>
+    /// <param name="smooth">will it teleport(false) or move smoothly (true) </param>
     public void MoveTo ( Vector2 Target, float speed, bool smooth = true) 
     {   //if we are moving stop moving
         StopMoving();
@@ -42,37 +55,35 @@ public class Character
     }
 
     public void StopMoving(bool arriveAtTargetPositionImmediately = false)
-    { if (isMoving)
+    { 
+        if (IsMoving)
         {
             CharacterManager.instance.StopCoroutine(moving);
             if (arriveAtTargetPositionImmediately)
+            {
                 SetPosition(targetPosition);
+            }
         }
 
         moving = null;
-    
-    
     }
 
     public void SetPosition(Vector2 target)
     {
-        Vector2 padding = anchorPadding;
+        Vector2 padding = GetAnchorPadding();
         float maxX = 1f - padding.x;
         float maxY = 1f - padding.y;
         Vector2 minAnchorTarget = new Vector2(maxX - targetPosition.x, maxY - targetPosition.y);
         
         root.anchorMin = minAnchorTarget;
         root.anchorMax = root.anchorMin + padding;
-     
-
-
-
     }
+
     IEnumerator Moving(Vector2 target, float speed, bool smooth)
     {
         targetPosition = target;
 
-        Vector2 padding = anchorPadding;
+        Vector2 padding = GetAnchorPadding();
         float maxX = 1f - padding.x;
         float maxY = 1f - padding.y;
 
@@ -81,7 +92,16 @@ public class Character
 
         while (root.anchorMin != minAnchorTarget) 
         {
-            root.anchorMin = (!smooth) ? Vector2.MoveTowards(root.anchorMin, minAnchorTarget, speed) : Vector2.Lerp(root.anchorMin, minAnchorTarget, speed);
+            //root.anchorMin = (!smooth) ? Vector2.MoveTowards(root.anchorMin, minAnchorTarget, speed) : Vector2.Lerp(root.anchorMin, minAnchorTarget, speed);
+            if (!smooth)
+            {
+                root.anchorMin = Vector2.MoveTowards(root.anchorMin, minAnchorTarget, speed);
+            }
+            else
+            {
+                root.anchorMin = Vector2.Lerp(root.anchorMin, minAnchorTarget, speed);
+            }
+            
             root.anchorMax = root.anchorMin + padding;
             yield return new WaitForEndOfFrame();
         }
@@ -107,7 +127,7 @@ public class Character
 
         renderers.renderer = ob.GetComponentInChildren<RawImage>();
 
-        if (isMultiLayerCharacter) 
+        if (IsMultiLayerCharacter) 
         {
             renderers.bodyRenderer = ob.transform.Find("bodyLayer").GetComponent<Image> ();
             renderers.expressionRenderer = ob.transform.Find("expressionLayer").GetComponent<Image>();
@@ -115,7 +135,7 @@ public class Character
         }
 
         //dialogue = DialogueSystem.instance;
-        enabled = enableOnStart;
+        Enabled = enableOnStart;
     
     }
 

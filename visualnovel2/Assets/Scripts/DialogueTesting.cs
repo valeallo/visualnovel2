@@ -9,8 +9,7 @@ public class DialogueTesting : MonoBehaviour
      //Start is called before the first frame update
     void Start()
     {
-        dialogue = DialogueSystem.instance;
-        
+        dialogue = DialogueSystem.instance;   
     }
 
     public string[] s = new string[]
@@ -45,7 +44,12 @@ public class DialogueTesting : MonoBehaviour
     {
         string[] parts = s.Split(':');
         string speech = parts[0];
-        string speaker = (parts.Length >= 2) ? parts[1] : "";
+        string speaker = "";
+        if (parts.Length >= 2)
+        {
+            speaker = parts[1];
+        }
+        //string speaker = (parts.Length >= 2) ? parts[1] : "";
 
         dialogue.Say(speech, true, speaker);
 

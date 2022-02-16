@@ -36,14 +36,11 @@ public class CharacterManager : MonoBehaviour
         if (characterDictionary.TryGetValue(characterName, out index))
         {
             return characters [index];
-
         }
 
         else if (createCharacterIfDoesNotExist)
-        
         {
             return CreateCharacter(characterName, enableCreatedCharacterOnStart);
-        
         }
 
         return null;
@@ -59,8 +56,6 @@ public class CharacterManager : MonoBehaviour
         characters.Add(newCharacter);
 
         return newCharacter;
-
-    
     }
 
     public class CHARACTERPOSITIONS
@@ -69,9 +64,6 @@ public class CharacterManager : MonoBehaviour
         public Vector2 topRight = new Vector2(1f, 1f);
         public Vector2 center = new Vector2(0.5f, 0.5f);
         public Vector2 bottomRight = new Vector2(1f, 0);
-
-
-    
     }
     public static CHARACTERPOSITIONS characterpositions = new CHARACTERPOSITIONS();
 

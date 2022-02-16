@@ -23,16 +23,18 @@ public class CharacterTesting : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-        
         {
             if (i < speech.Length)
+            {
                 Raelin.Say(speech[i]);
+            }
             else
+            {
                 DialogueSystem.instance.Close();
-
+            }
             i++;
-        
         }
+
         if (Input.GetKey(KeyCode.M)) 
         {
             Raelin.MoveTo(moveTarget, moveSpeed, smooth);
