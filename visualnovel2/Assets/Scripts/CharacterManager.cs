@@ -7,8 +7,6 @@ using UnityEngine.UI;
 //Responsible for adding and mantaining characters in the scene
 public class CharacterManager : MonoBehaviour
 {
-    public static CharacterManager instance;
-
     //all characters must be attached to the character panel
     public RectTransform characterPanel;
 
@@ -22,7 +20,7 @@ public class CharacterManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        ServiceLocator.SetCharacterManager(this);
     }
 
 

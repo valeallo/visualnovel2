@@ -27,11 +27,11 @@ public class Character
         }
         if (!add)
         { 
-            DialogueSystem.instance.Say(speech, true, characterName); 
+            ServiceLocator.GetDialogueSystem().Say(speech, true, characterName); 
         }
         else
         { 
-            DialogueSystem.instance.SayAdd(speech, characterName); 
+            ServiceLocator.GetDialogueSystem().SayAdd(speech, characterName); 
         }
     
     }
@@ -50,7 +50,7 @@ public class Character
     {   //if we are moving stop moving
         StopMoving();
         //start moving coroutine
-        moving = CharacterManager.instance.StartCoroutine(Moving (Target, speed, smooth));
+        moving = ServiceLocator.GetCharacterManager().StartCoroutine(Moving (Target, speed, smooth));
     
     }
 
@@ -58,7 +58,7 @@ public class Character
     { 
         if (IsMoving)
         {
-            CharacterManager.instance.StopCoroutine(moving);
+            ServiceLocator.GetCharacterManager().StopCoroutine(moving);
             if (arriveAtTargetPositionImmediately)
             {
                 SetPosition(targetPosition);
@@ -112,7 +112,7 @@ public class Character
     //create a new character
     public Character(string _name, bool enableOnStart = true)
     {
-        CharacterManager cm = CharacterManager.instance;
+        CharacterManager cm = ServiceLocator.GetCharacterManager();
 
         //locate the character prefab
         GameObject prefab = Resources.Load("Characters/Character[Raelin]") as GameObject;  

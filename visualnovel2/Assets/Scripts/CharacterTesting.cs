@@ -8,7 +8,7 @@ public class CharacterTesting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Raelin = CharacterManager.instance.GetCharacter("Character[Raelin]"); 
+        Raelin = ServiceLocator.GetCharacterManager().GetCharacter("Character[Raelin]"); 
     }
 
     public string[] speech;
@@ -30,7 +30,7 @@ public class CharacterTesting : MonoBehaviour
             }
             else
             {
-                DialogueSystem.instance.Close();
+                ServiceLocator.GetDialogueSystem().Close();
             }
             i++;
         }

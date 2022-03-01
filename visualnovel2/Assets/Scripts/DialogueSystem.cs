@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class DialogueSystem : MonoBehaviour
 {
-    public static DialogueSystem instance;
+   
     public ELEMENTS elements;
     
     private void Awake()
     {
-         instance = this;  
+        ServiceLocator.SetDialogueSystem(this);
     }
     // Start is called before the first frame update
     void Start()

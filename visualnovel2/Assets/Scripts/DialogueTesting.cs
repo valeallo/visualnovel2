@@ -9,7 +9,7 @@ public class DialogueTesting : MonoBehaviour
      //Start is called before the first frame update
     void Start()
     {
-        dialogue = DialogueSystem.instance;   
+        dialogue = ServiceLocator.GetDialogueSystem();
     }
 
     public string[] s = new string[]
